@@ -11,7 +11,7 @@ Método: GET
 
 Descripción: Retorna un producto específicado por un ID en formato JSON.
 
-Ejemplo de respuesta para ID = 1:
+Ejemplo de respuesta para ID = 8:
 
  {
         "id": 8,
@@ -21,6 +21,7 @@ Ejemplo de respuesta para ID = 1:
         "precio": 5000,
         "vendedor": "martina"
     }
+
 2. Insertar una nueva categoría
 Endpoint: http://localhost/TP3_web2/api/categoria
 
@@ -36,6 +37,7 @@ Formato JSON de solicitud:
     "material": "algodon",
     "color": "blanco"
 }
+
 3. Obtener productos ordenadas
 Endpoint: http://localhost/TP3_web2/api/productos
 
@@ -46,15 +48,17 @@ Descripción: Retorna todos los productos ordenados según el precio puede ser d
 Parámetros de consulta:
 
 sort: tiene que ser "precio"
-order: Puede ser "asc" (ascendente) o "desc" (descendente).
+order=1 o order=0: Filtra de manera descendente (1) o ascendente (0).
 Ejemplos de uso:
 
-Ordenar por ID de manera descendente: http://localhost/TP3_web2/api/productos?sort=precio&order=desc
-Ordenar por ID de manera ascendente: http://localhost/TP3_web2/api/productos?sort=precio&order=asc
+Ordenar por ID de manera descendente: http://localhost/TP3_web2/api/productos?sort=precio&order=1
+Ordenar por ID de manera ascendente: http://localhost/TP3_web2/api/productos?sort=precio&order=0
+
 4. Obtener todos los productos
 Endpoint: http://localhost/TP3_web2/api/productos
 Método: GET
 Descripción: Retorna todos los productos.
+
 5. Modificar un producto
 Endpoint: http://localhost/TP3_web2/api/productos/:id
 
