@@ -9,20 +9,7 @@
             parent::__construct();
             $this->model = new ProductsModel();
         }
-        function get($id = null){
-            if (isset($_GET['precio']) && isset($_GET['DESC'])) {
-                    $sort = $_GET['precio'];
-                    $order = $_GET['DESC'];
-        
-                    if ($sort == 'precio' && ($order == 'DESC')) {
-                        $filterProducts = $this->model->getOrder($sort, $order);
-                        $this->view->response(['msg' => 'El precio de los productos en forma descendente son: ' . ($filterProducts)], 200);
-                    } else {
-                        $this->view->response(['msg' => 'Los parametros no son validos'], 400);
-                           }
-              }
-    else{
-        if(!$id){
+       function getAll(){
             $products = $this->model->getAll();
             if(empty($products)){
                 $this->view->response($products, 404);
@@ -30,22 +17,32 @@
             else{
                 $this->view->response($products, 200);
             }
-        }
-    }
-        }
+       }
+        
     
 
-        function productID($id){
-            if($id){
-                $product= $this->model->getProductsID($id);
-              if(empty($product)){
-                $this->view->response($product, 404);
-               }
-               else{
-                $this->view->response($product, 200);
-               }
-             }
-        }
+                function get($params = [])
+               {
+                if (empty($params)) {
+
+                    $sort = (!empty($_GET['precio'])) ? $_GET['precio'] : 'precio'; 
+                    $order = (!empty($_GET['order']) && $_GET['order'] == 1) ? "DESC" : "ASC"; 
+                    $products = $this->model->getOrder($sort, $order);
+                    $this->view->response($products, 200);
+                } else {
+                    $product = $this->model->getProductsID($params[":ID"]);
+                    if (!empty($product)) {
+                        $this->view->response($product, 200);
+                    } else {
+                        $this->view->response('El producto con el id=' . $params[':ID'] . ' no existe.', 404);
+                    }
+        
+                }
+        
+            }
+           
+           
+    
         
         function update($params = []) {
             $id = $params[':ID'];
@@ -65,6 +62,5 @@
             } else {
                 $this->view->response('La tarea con id='.$id.' no existe.', 404);
             }
-         }
-      
         }
+    }
